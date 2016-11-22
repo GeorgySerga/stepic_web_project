@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class QuestionManager():
+class QuestionManager(models.Manager):
     def new(self):
         self.oder_by('added_at')
     def popular():
