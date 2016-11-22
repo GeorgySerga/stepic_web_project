@@ -1,10 +1,14 @@
 from __future__ import unicode_literals
 
 from django.db import models
-
-# Create your models here.
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+
+
+class QuestionManager():
+    def new(self):
+        self.oder_by('added_at')
+    def popular():
+        self.oder_by('likes')
 
 
 class Question(models.Model):
@@ -14,15 +18,10 @@ class Question(models.Model):
     rating = models.IntegerField(default=0)
     author = models.ForeignKey(User, related_name="question_author")
     likes = models.ManyToManyField(User, related_name="question_like", blank=True)
-
-    class Meta:
-        ordering = ('-added_at',)
+    objects = QuestionManager()
 
     def __str__(self):
         return self.title
-
-    def get_absolute_url(self):
-        return reverse('question_detail', kwargs={'pk': self.pk})
 
 
 class Answer(models.Model):
@@ -30,9 +29,6 @@ class Answer(models.Model):
     added_at = models.DateTimeField(auto_now_add=True)
     question = models.ForeignKey(Question)
     author = models.ForeignKey(User)
-
-    class Meta:
-        ordering = ('added_at',)
 
     def __str__(self):
         return 'Answer by {}'.format(self.author)
