@@ -15,7 +15,7 @@ def question_list(request):
   else:
     questions = Question.objects.new()
 
-  paginatior = Paginator(questions, 10)
+  paginator = Paginator(questions, 10)
   page = paginator.page(page)
 
   return render(request, 'qa/templates/question_list.html', {
